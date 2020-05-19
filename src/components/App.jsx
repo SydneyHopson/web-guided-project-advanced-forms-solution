@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Friend from './Friend'
 import FriendForm from './FriendForm'
 import axios from 'axios'
+import * as yup from 'yup'
 
 // 👉 [GET] request to `http://localhost:4000`
 const responseBody = [
@@ -36,6 +37,24 @@ const initialFormValues = {
     coding: false,
   },
 }
+
+const formSchema = yup.object().shape({
+  username: yup
+    .string()
+    .min(3, 'username must have at least 3 characters')
+    .required('username is required'),
+  email: yup
+    .string()
+    .email('a VALID email is required')
+    .required('email is required'),
+  role: yup
+    .mixed().oneOf(['Student', 'Alumni', 'Instructor', 'TL'])
+    .required('role is required'),
+  civil: yup
+    .string()
+    .matches(/(Married|Single)/, 'either single or married')
+    .required('civil status is required'),
+})
 
 export default function App() {
   const [friends, setFriends] = useState([])
