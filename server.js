@@ -13,12 +13,13 @@ const friends = [
     id: uuid(),
     username: 'Michael',
     email: 'michael@michael.com',
-    married: true,
+    role: 'Student',
+    civil: 'Single',
     hobbies: [
       'hiking',
       'reading',
-      'coding'
-    ]
+      'coding',
+    ],
   },
 ]
 
@@ -28,24 +29,26 @@ app.get('/friends/:id', (req, res) => {
     res.status(404).json({ message: 'No such friend!' })
   }
   else {
-    setTimeout(() => {
-      res.json(friend)
-    }, 500)
+    res.json(friend)
   }
 })
 
 app.get('/friends', (req, res) => {
-  setTimeout(() => {
-    res.json(friends)
-  }, 500);
+  res.json(friends)
 })
 
 app.post('/friends', (req, res) => {
-  const newFriend = { id: uuid(), ...req.body }
-  friends.push(newFriend)
-  setTimeout(() => {
+  const { username, email, role, civil } = req.body
+  const requiredFields = { username, email, role, civil }
+
+  if (Object.values(requiredFields).some(field => (!field || !field.trim()))) {
+    res.status(400).json({ message: 'Some required fields are missing or invalid.' })
+  }
+  else {
+    const newFriend = { id: uuid(), ...req.body }
+    friends.push(newFriend)
     res.status(200).json(newFriend)
-  }, 500);
+  }
 })
 
 app.listen(port, () => {

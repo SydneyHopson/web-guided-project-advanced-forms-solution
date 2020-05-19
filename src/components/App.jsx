@@ -6,7 +6,7 @@ import FriendForm from './FriendForm'
 const initialFriendsList = [
   // 👉 the shape of the actual friend object from API
   {
-    id: uuid(),
+    id: 'xyz',
     username: 'Michael',
     email: 'michael@michael.com',
     role: 'Student',

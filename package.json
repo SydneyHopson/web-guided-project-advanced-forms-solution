@@ -2,7 +2,8 @@
   "name": "web-guided-project-advanced-forms-solution",
   "version": "0.0.1",
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "server": "node server.js"
   },
   "license": "ISC",
   "devDependencies": {
