@@ -9,6 +9,7 @@ export default function FriendForm(props) {
     onCheckboxChange,
     onSubmit,
     errors,
+    disabled,
   } = props
 
   return (
@@ -16,14 +17,14 @@ export default function FriendForm(props) {
     <form className='form container' onSubmit={onSubmit}>
       <div className='form-group submit'>
         <h2>Add a Friend</h2>
-        <button>submit</button>
+        <button disabled={disabled}>submit</button>
 
         {/* 🔥 STEP 10 - SHOW A BUNCH OF ERRORS */}
         <div className='errors'>
-          {errors.username}&nbsp;
-          {errors.email}&nbsp;
-          {errors.role}&nbsp;
-          {errors.civil}
+          <span>{errors.username}</span>
+          <span>{errors.email}</span>
+          <span>{errors.role}</span>
+          <span>{errors.civil}</span>
         </div>
       </div>
 
@@ -63,7 +64,7 @@ export default function FriendForm(props) {
             value={values.role}
             name='role'
           >
-            <option value=''>- Select an option -</option>
+            <option value=''>-- Select an option --</option>
             <option value='Student'>Student</option>
             <option value='Alumni'>Alumni</option>
             <option value='Instructor'>Instructor</option>

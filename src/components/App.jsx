@@ -49,25 +49,26 @@ const initialFormErrors = {
 const formSchema = yup.object().shape({
   username: yup
     .string()
-    .min(3, 'username must have at least 3 characters')
+    .min(3, 'The username must have at least 3 characters')
     .required('username is required'),
   email: yup
     .string()
-    .email('a VALID email is required')
+    .email('A valid email is required')
     .required('email is required'),
   role: yup
-    .mixed().oneOf(['Student', 'Alumni', 'Instructor', 'TL'])
-    .required('role is required'),
+    .mixed().oneOf(['Student', 'Alumni', 'Instructor', 'TL'], 'Select a valid role')
+    .required('A Role is required'),
   civil: yup
     .string()
-    .matches(/(Married|Single)/, 'either single or married')
-    .required('civil status is required'),
+    .matches(/(Married|Single)/, 'Either single or married')
+    .required('Civil status is required'),
 })
 
 export default function App() {
   const [friends, setFriends] = useState([])
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [disabled, setDisabled] = useState(true)
 
   useEffect(() => {
     axios.get('http://localhost:4000/friends')
@@ -78,6 +79,13 @@ export default function App() {
         debugger
       })
   }, [])
+
+  useEffect(() => {
+    formSchema.isValid(formValues)
+      .then(valid => {
+        setDisabled(!valid)
+      })
+  }, [formValues])
 
   const onInputChange = evt => {
     // a) pull the name of the input from the event object
@@ -169,6 +177,7 @@ export default function App() {
         onCheckboxChange={onCheckboxChange}
         onSubmit={onSubmit}
         errors={formErrors}
+        disabled={disabled}
       />
 
       {
