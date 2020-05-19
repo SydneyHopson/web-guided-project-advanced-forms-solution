@@ -38,6 +38,14 @@ const initialFormValues = {
   },
 }
 
+// 👉 the shape of the validation errors object
+const initialFormErrors = {
+  username: '',
+  email: '',
+  role: '',
+  civil: '',
+}
+
 const formSchema = yup.object().shape({
   username: yup
     .string()
@@ -59,6 +67,7 @@ const formSchema = yup.object().shape({
 export default function App() {
   const [friends, setFriends] = useState([])
   const [formValues, setFormValues] = useState(initialFormValues)
+  const [formErrors, setFormErrors] = useState(initialFormErrors)
 
   useEffect(() => {
     axios.get('http://localhost:4000/friends')
@@ -76,6 +85,26 @@ export default function App() {
     // b) pull the value of the input from the event object
     const value = evt.target.value // who knows, the current value
     // c) set a new state for the whole form
+
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      .then(valid => {
+        // yoohoo, validates :)
+        // CLEAR ERROR
+        setFormErrors({
+          ...formErrors,
+          [name]: '',
+        })
+      })
+      .catch(err => {
+        // dangit, does not validate :(
+        // SET THE ERROR IN THE RIGHT PLACE
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0]
+        })
+      })
 
     setFormValues({
       // copy over all the properties from formValues
@@ -139,6 +168,7 @@ export default function App() {
         onInputChange={onInputChange}
         onCheckboxChange={onCheckboxChange}
         onSubmit={onSubmit}
+        errors={formErrors}
       />
 
       {
