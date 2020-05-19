@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-import { v4 as uuid } from 'uuid'
+import React, { useState, useEffect } from 'react'
 import Friend from './Friend'
 import FriendForm from './FriendForm'
+import axios from 'axios'
 
-const initialFriendsList = [
-  // 👉 the shape of the actual friend object from API
+// 👉 [GET] request to `http://localhost:4000`
+const responseBody = [
   {
+    // 👉 the shape of each actual friend object from API
     id: 'xyz',
     username: 'Michael',
     email: 'michael@michael.com',
@@ -37,15 +38,20 @@ const initialFormValues = {
 }
 
 export default function App() {
-  const [friends, setFriends] = useState(initialFriendsList)
+  const [friends, setFriends] = useState([])
+  const [formValues, setFormValues] = useState(initialFormValues)
 
-  // 🔥 STEP 1 - WE NEED STATE TO HOLD ALL VALUES OF THE FORM!
-  const [formValues, setFormValues] = useState(initialFormValues)// fix this using the state hook
+  useEffect(() => {
+    axios.get('http://localhost:4000/friends')
+      .then(res => {
+        setFriends(res.data)
+      })
+      .catch(err => {
+        debugger
+      })
+  }, [])
 
   const onInputChange = evt => {
-    // 🔥 STEP 4 - IMPLEMENT A CHANGE HANDLER (works for inputs and dropdowns)
-    // which can change the state of inputs of type text
-
     // a) pull the name of the input from the event object
     const name = evt.target.name // either 'username' or 'email'
     // b) pull the value of the input from the event object
@@ -75,15 +81,12 @@ export default function App() {
   }
 
   const onSubmit = evt => {
-    // 🔥 STEP 5 - IMPLEMENT A SUBMIT HANDLER
-
     // a) don't allow the browser to reload!
     evt.preventDefault()
     // b) make a new friend object with an id, GROSS
     //    set up the new friend with the correct attributes
     //    using the information inside the state of the form
     const newFriend = {
-      id: uuid(),
       username: formValues.username,
       email: formValues.email,
       role: formValues.role,
@@ -91,10 +94,19 @@ export default function App() {
       hobbies: Object.keys(formValues.hobbies)
         .filter(hobby => formValues.hobbies[hobby] === true)
     }
-    // c) update the list of friends in state with the new friend
-    setFriends([newFriend, ...friends])
-    // d) optionally clear the form
-    setFormValues(initialFormValues)
+    // c) POST the new friend
+    axios.post('http://localhost:4000/friends', newFriend)
+      .then(res => {
+        // d) update the list of friends in state with the new friend
+        setFriends([res.data, ...friends])
+      })
+      .catch(err => {
+        debugger
+      })
+      .finally(() => {
+        // e) clear the form
+        setFormValues(initialFormValues)
+      })
   }
 
   return (
@@ -121,6 +133,3 @@ export default function App() {
     </div>
   )
 }
-
-// 🔥 STEP 6 - DO STEPS 3, 4 & 5 FOR THE DROPDOWN
-// 🔥 STEP 7 - DO STEPS 3, 4 & 5 FOR THE CHECKBOXES
