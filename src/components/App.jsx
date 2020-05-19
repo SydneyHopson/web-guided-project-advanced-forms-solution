@@ -6,7 +6,7 @@ import axios from 'axios'
 // 👉 [GET] request to `http://localhost:4000`
 const responseBody = [
   {
-    // 👉 the shape of each actual friend object from API
+    // 👉 the shape of each friend object from API
     id: 'xyz',
     username: 'Michael',
     email: 'michael@michael.com',
@@ -83,7 +83,7 @@ export default function App() {
   const onSubmit = evt => {
     // a) don't allow the browser to reload!
     evt.preventDefault()
-    // b) make a new friend object with an id, GROSS
+    // b) make a new friend object, and
     //    set up the new friend with the correct attributes
     //    using the information inside the state of the form
     const newFriend = {
@@ -114,7 +114,6 @@ export default function App() {
       <header><h1>Friends App</h1></header>
 
       <FriendForm
-        // 🔥 STEP 2 - THE FORM WANTS ITS FOOD!!!!
         // check implementation of FriendForm
         // to see what props it expects
         values={formValues}
