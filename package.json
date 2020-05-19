@@ -1,0 +1,30 @@
+{
+  "name": "web-guided-project-advanced-forms-solution",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "parcel src/index.html"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "eslint-plugin-react": "^7.20.0",
+    "less": "^3.11.1",
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "uuid": "^8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LambdaSchool/web-guided-project-advanced-forms-solution.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LambdaSchool/web-guided-project-advanced-forms-solution/issues"
+  },
+  "homepage": "https://github.com/LambdaSchool/web-guided-project-advanced-forms-solution#readme"
+}
