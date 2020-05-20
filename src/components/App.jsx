@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Friend from './Friend'
 import FriendForm from './FriendForm'
-// 🔥 IMPORT THE SCHEMA, AXIOS AND YUP
+// 🔥 STEP 1- CHECK THE ENDPOINTS USING POSTMAN OR HTTPIE
+// 🔥 STEP 2- FLESH OUT FriendForm.jsx
+// 🔥 STEP 3- FLESH THE SCHEMA IN ITS OWN FILE
+// 🔥 STEP 4- IMPORT THE SCHEMA, AXIOS AND YUP
 import formSchema from '../validation/formSchema'
 import axios from 'axios'
 import * as yup from 'yup'
@@ -37,7 +40,7 @@ const initialDisabled = true
 export default function App() {
   const [friends, setFriends] = useState(initialFriends)
   const [formValues, setFormValues] = useState(initialFormValues)
-  // 🔥 SET UP STATE FOR `formErrors` AND `disabled`
+  // 🔥 STEP 5- SET UP STATE FOR `formErrors` AND `disabled`
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(initialDisabled)
 
@@ -45,7 +48,7 @@ export default function App() {
   //////////////// HELPERS ////////////////
   //////////////// HELPERS ////////////////
   const getFriends = () =>
-    // 🔥 IMPLEMENT! ON SUCCESS PUT FRIENDS IN STATE
+    // 🔥 STEP 6- IMPLEMENT! ON SUCCESS PUT FRIENDS IN STATE
     //    helper to [GET] all friends from `http://localhost:4000/friends`
     axios.get('http://localhost:4000/friends')
       .then(res => {
@@ -56,7 +59,7 @@ export default function App() {
       })
 
   const postNewFriend = newFriend =>
-    // 🔥 IMPLEMENT! ON SUCCESS ADD NEWLY CREATED FRIEND TO STATE
+    // 🔥 STEP 7- IMPLEMENT! ON SUCCESS ADD NEWLY CREATED FRIEND TO STATE
     //    helper to [POST] `newFriend` to `http://localhost:4000/friends`
     //    and regardless of success or failure, the form should reset
     axios.post('http://localhost:4000/friends', newFriend)
@@ -78,7 +81,7 @@ export default function App() {
     const name = evt.target.name
     const value = evt.target.value
 
-    // 🔥 RUN VALIDATION WITH YUP
+    // 🔥 STEP 8- RUN VALIDATION WITH YUP
     yup.reach(formSchema, name)
       .validate(value)
       .then(valid => {
@@ -96,7 +99,6 @@ export default function App() {
         })
       })
 
-    // d) set a new state for the whole form
     setFormValues({
       // copy over all the properties from formValues
       ...formValues,
@@ -105,7 +107,7 @@ export default function App() {
   }
 
   const onCheckboxChange = evt => {
-    // 🔥 IMPLEMENT!
+    // 🔥 STEP 9- IMPLEMENT!
     // a) pull the `name` of the checkbox from the event
     const { name } = evt.target
     // b) pull whether `checked` true or false, from the event
@@ -124,15 +126,15 @@ export default function App() {
     evt.preventDefault()
 
     const newFriend = {
-      username: formValues.username,
-      email: formValues.email,
-      role: formValues.role,
-      civil: formValues.civil,
-      // 🔥 WHAT ABOUT HOBBIES?
+      username: formValues.username.trim(),
+      email: formValues.email.trim(),
+      role: formValues.role.trim(),
+      civil: formValues.civil.trim(),
+      // 🔥 STEP 10- WHAT ABOUT HOBBIES?
       hobbies: Object.keys(formValues.hobbies)
         .filter(hobby => formValues.hobbies[hobby] === true)
     }
-    // 🔥 POST NEW FRIEND USING HELPER
+    // 🔥 STEP 11- POST NEW FRIEND USING HELPER
     postNewFriend(newFriend)
   }
 
@@ -145,7 +147,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    // 🔥 ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
+    // 🔥 STEP 12- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
     formSchema.isValid(formValues)
       .then(valid => {
         setDisabled(!valid)
