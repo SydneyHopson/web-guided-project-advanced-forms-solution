@@ -21,10 +21,10 @@ export default function FriendForm(props) {
 
         {/* 🔥 STEP 10 - SHOW A BUNCH OF ERRORS */}
         <div className='errors'>
-          <span>{errors.username}</span>
-          <span>{errors.email}</span>
-          <span>{errors.role}</span>
-          <span>{errors.civil}</span>
+          <div>{errors.username}</div>
+          <div>{errors.email}</div>
+          <div>{errors.role}</div>
+          <div>{errors.civil}</div>
         </div>
       </div>
 

@@ -1,27 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Friend from './Friend'
 import FriendForm from './FriendForm'
+import formSchema from '../validation/formSchema'
 import axios from 'axios'
 import * as yup from 'yup'
 
-// 👉 [GET] request to `http://localhost:4000`
-const responseBody = [
-  {
-    // 👉 the shape of each friend object from API
-    id: 'xyz',
-    username: 'Michael',
-    email: 'michael@michael.com',
-    role: 'Student',
-    civil: 'Single',
-    hobbies: [
-      'hiking',
-      'reading',
-      'coding',
-    ],
-  },
-]
-
-// 👉 the shape of the state that drives the form
+//////////////// INITIAL STATES ////////////////
+//////////////// INITIAL STATES ////////////////
+//////////////// INITIAL STATES ////////////////
+// 👉 formValues
 const initialFormValues = {
   ///// TEXT INPUTS /////
   username: '',
@@ -37,40 +24,29 @@ const initialFormValues = {
     coding: false,
   },
 }
-
-// 👉 the shape of the validation errors object
+// 👉 formErrors
 const initialFormErrors = {
   username: '',
   email: '',
   role: '',
   civil: '',
 }
-
-const formSchema = yup.object().shape({
-  username: yup
-    .string()
-    .min(3, 'The username must have at least 3 characters')
-    .required('username is required'),
-  email: yup
-    .string()
-    .email('A valid email is required')
-    .required('email is required'),
-  role: yup
-    .mixed().oneOf(['Student', 'Alumni', 'Instructor', 'TL'], 'Select a valid role')
-    .required('A Role is required'),
-  civil: yup
-    .string()
-    .matches(/(Married|Single)/, 'Either single or married')
-    .required('Civil status is required'),
-})
+// 👉 friends
+const initialFriends = []
+// 👉 disabled
+const initialDisabled = true
 
 export default function App() {
-  const [friends, setFriends] = useState([])
+  const [friends, setFriends] = useState(initialFriends)
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(initialDisabled)
 
-  useEffect(() => {
+  //////////////// HELPERS ////////////////
+  //////////////// HELPERS ////////////////
+  //////////////// HELPERS ////////////////
+  // 👉 helper to [GET] all friends from `http://localhost:4000/friends`
+  const getFriends = () =>
     axios.get('http://localhost:4000/friends')
       .then(res => {
         setFriends(res.data)
@@ -78,42 +54,48 @@ export default function App() {
       .catch(err => {
         debugger
       })
-  }, [])
 
-  useEffect(() => {
-    formSchema.isValid(formValues)
-      .then(valid => {
-        setDisabled(!valid)
+  // 👉 helper to [POST] new friend to `http://localhost:4000/friends`
+  const postNewFriend = newFriend =>
+    axios.post('http://localhost:4000/friends', newFriend)
+      .then(res => {
+        setFriends([res.data, ...friends])
+        // or trigger `getFriends`
       })
-  }, [formValues])
+      .catch(err => {
+        debugger
+      })
+      .finally(() => {
+        setFormValues(initialFormValues)
+      })
 
+  //////////////// EVENT HANDLERS ////////////////
+  //////////////// EVENT HANDLERS ////////////////
+  //////////////// EVENT HANDLERS ////////////////
   const onInputChange = evt => {
-    // a) pull the name of the input from the event object
+    // a) pull the `name` of the input from the event object
     const name = evt.target.name // either 'username' or 'email'
-    // b) pull the value of the input from the event object
+    // b) pull the `value` of the input from the event object
     const value = evt.target.value // who knows, the current value
-    // c) set a new state for the whole form
-
-    yup
-      .reach(formSchema, name)
+    // c) run validation on the `value`
+    yup.reach(formSchema, name)
       .validate(value)
       .then(valid => {
-        // yoohoo, validates :)
-        // CLEAR ERROR
+        // the value validates, clear error
         setFormErrors({
           ...formErrors,
           [name]: '',
         })
       })
       .catch(err => {
-        // dangit, does not validate :(
-        // SET THE ERROR IN THE RIGHT PLACE
+        // the value does not validate, set an error
         setFormErrors({
           ...formErrors,
           [name]: err.errors[0]
         })
       })
 
+    // d) set a new state for the whole form
     setFormValues({
       // copy over all the properties from formValues
       ...formValues,
@@ -122,9 +104,9 @@ export default function App() {
   }
 
   const onCheckboxChange = evt => {
-    // a) pull the name of the checkbox from the event
+    // a) pull the `name` of the checkbox from the event
     const { name } = evt.target
-    // b) pull whether checked true or false, from the event
+    // b) pull whether `checked` true or false, from the event
     const isChecked = evt.target.checked
     // c) set a new state for the whole form
     setFormValues({
@@ -151,27 +133,29 @@ export default function App() {
         .filter(hobby => formValues.hobbies[hobby] === true)
     }
     // c) POST the new friend
-    axios.post('http://localhost:4000/friends', newFriend)
-      .then(res => {
-        // d) update the list of friends in state with the new friend
-        setFriends([res.data, ...friends])
-      })
-      .catch(err => {
-        debugger
-      })
-      .finally(() => {
-        // e) clear the form
-        setFormValues(initialFormValues)
-      })
+    postNewFriend(newFriend)
   }
+
+  //////////////// SIDE EFFECTS ////////////////
+  //////////////// SIDE EFFECTS ////////////////
+  //////////////// SIDE EFFECTS ////////////////
+
+  useEffect(() => {
+    getFriends()
+  }, [])
+
+  useEffect(() => {
+    formSchema.isValid(formValues)
+      .then(valid => {
+        setDisabled(!valid)
+      })
+  }, [formValues])
 
   return (
     <div className='container'>
       <header><h1>Friends App</h1></header>
 
       <FriendForm
-        // check implementation of FriendForm
-        // to see what props it expects
         values={formValues}
         onInputChange={onInputChange}
         onCheckboxChange={onCheckboxChange}
