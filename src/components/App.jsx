@@ -81,7 +81,7 @@ export default function App() {
     const name = evt.target.name
     const value = evt.target.value
 
-    // 🔥 STEP 8- RUN VALIDATION WITH YUP
+    // 🔥 STEP 12- RUN VALIDATION WITH YUP
     yup.reach(formSchema, name)
       .validate(value)
       .then(valid => {
@@ -107,7 +107,7 @@ export default function App() {
   }
 
   const onCheckboxChange = evt => {
-    // 🔥 STEP 9- IMPLEMENT!
+    // 🔥 STEP 8- IMPLEMENT!
     // a) pull the `name` of the checkbox from the event
     const { name } = evt.target
     // b) pull whether `checked` true or false, from the event
@@ -130,11 +130,11 @@ export default function App() {
       email: formValues.email.trim(),
       role: formValues.role.trim(),
       civil: formValues.civil.trim(),
-      // 🔥 STEP 10- WHAT ABOUT HOBBIES?
+      // 🔥 STEP 9- WHAT ABOUT HOBBIES?
       hobbies: Object.keys(formValues.hobbies)
         .filter(hobby => formValues.hobbies[hobby] === true)
     }
-    // 🔥 STEP 11- POST NEW FRIEND USING HELPER
+    // 🔥 STEP 10- POST NEW FRIEND USING HELPER
     postNewFriend(newFriend)
   }
 
@@ -142,12 +142,11 @@ export default function App() {
   //////////////// SIDE EFFECTS ////////////////
   //////////////// SIDE EFFECTS ////////////////
   useEffect(() => {
-    // 🔥 GET FRIENDS USING HELPER
     getFriends()
   }, [])
 
   useEffect(() => {
-    // 🔥 STEP 12- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
+    // 🔥 STEP 11- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
     formSchema.isValid(formValues)
       .then(valid => {
         setDisabled(!valid)
@@ -162,7 +161,7 @@ export default function App() {
         values={formValues}
         onInputChange={onInputChange}
         onSubmit={onSubmit}
-        // 🔥 ADDITIONAL PROPS NEEDED
+        // 🔥🔥🔥 ADDITIONAL PROPS NEEDED 🔥🔥🔥
         onCheckboxChange={onCheckboxChange}
         errors={formErrors}
         disabled={disabled}
