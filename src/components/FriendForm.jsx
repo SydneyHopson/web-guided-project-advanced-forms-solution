@@ -35,7 +35,7 @@ export default function FriendForm(props) {
         {/* ////////// TEXT INPUTS ////////// */}
         {/* ////////// TEXT INPUTS ////////// */}
         <label>Username:&nbsp;
-        <input
+          <input
             // 🔥 STEP 3C - THIS INPUT WANTS VALUE & CHANGE HANDLER!
             // Inputs render what they're told
             // Their current value ultimately comes from app state
@@ -44,51 +44,58 @@ export default function FriendForm(props) {
             onChange={onInputChange}
             name='username'
             type='text'
-          /></label>
+          />
+        </label>
 
         <label>Email:&nbsp;
-        <input
+          <input
             value={values.email}
             onChange={onInputChange}
             name='email'
             type='text'
-          /></label>
+          />
+        </label>
 
         {/* ////////// DROPDOWN ////////// */}
         {/* ////////// DROPDOWN ////////// */}
         {/* ////////// DROPDOWN ////////// */}
-        <label>Role:&nbsp;
-        <select
+        <label>Role
+          <select
             // very similar to inputs of type text
             onChange={onInputChange}
             value={values.role}
             name='role'
           >
-            <option value=''>-- Select an option --</option>
+            <option value=''>- Select an option -</option>
             <option value='Student'>Student</option>
             <option value='Alumni'>Alumni</option>
             <option value='Instructor'>Instructor</option>
             <option value='TL'>Team Lead</option>
-          </select></label>
+          </select>
+        </label>
 
         {/* ////////// RADIO BUTTONS ////////// */}
         {/* ////////// RADIO BUTTONS ////////// */}
         {/* ////////// RADIO BUTTONS ////////// */}
-        <label>Single <input
-          // Radio buttons are different!
-          // We do NOT set their 'value', it is hard-coded
-          onChange={onInputChange}
-          checked={values.civil === 'Single'}
-          value='Single'
-          name='civil'
-          type='radio' /></label>
+        <label>Single
+          <input
+            // Radio buttons are different!
+            // We do NOT set their 'value', it is hard-coded
+            onChange={onInputChange}
+            checked={values.civil === 'Single'}
+            value='Single'
+            name='civil'
+            type='radio' />
+        </label>
 
-        <label>Married <input
-          onChange={onInputChange}
-          checked={values.civil === 'Married'}
-          value='Married'
-          name='civil'
-          type='radio' /></label>
+        <label>Married
+          <input
+            onChange={onInputChange}
+            checked={values.civil === 'Married'}
+            value='Married'
+            name='civil'
+            type='radio' />
+        </label>
       </div>
 
       <div className='form-group checkboxes'>
@@ -97,26 +104,32 @@ export default function FriendForm(props) {
         {/* ////////// CHECKBOXES ////////// */}
         {/* ////////// CHECKBOXES ////////// */}
         {/* ////////// CHECKBOXES ////////// */}
-        <label>Hiking <input
-          // Checkboxes are different!
-          // We do NOT set their 'value'
-          // We use a 'checked' prop with a bool
-          checked={values.hobbies.hiking}
-          onChange={onCheckboxChange}
-          name='hiking'
-          type='checkbox' /></label>
+        <label>Hiking
+          <input
+            // Checkboxes are different!
+            // We do NOT set their 'value'
+            // We use a 'checked' prop with a bool
+            checked={values.hobbies.hiking}
+            onChange={onCheckboxChange}
+            name='hiking'
+            type='checkbox' />
+        </label>
 
-        <label>Reading <input
-          checked={values.hobbies.reading}
-          onChange={onCheckboxChange}
-          name='reading'
-          type='checkbox' /></label>
+        <label>Reading
+          <input
+            checked={values.hobbies.reading}
+            onChange={onCheckboxChange}
+            name='reading'
+            type='checkbox' />
+        </label>
 
-        <label>Coding <input
-          checked={values.hobbies.coding}
-          onChange={onCheckboxChange}
-          name='coding'
-          type='checkbox' /></label>
+        <label>Coding
+          <input
+            checked={values.hobbies.coding}
+            onChange={onCheckboxChange}
+            name='coding'
+            type='checkbox' />
+        </label>
       </div>
     </form>
   )

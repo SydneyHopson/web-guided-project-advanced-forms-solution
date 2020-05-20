@@ -139,7 +139,6 @@ export default function App() {
   //////////////// SIDE EFFECTS ////////////////
   //////////////// SIDE EFFECTS ////////////////
   //////////////// SIDE EFFECTS ////////////////
-
   useEffect(() => {
     getFriends()
   }, [])
