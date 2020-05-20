@@ -1,26 +1,26 @@
 import React from 'react'
 
 export default function FriendForm(props) {
-  // THESE ARE THE **EXACT PROPS** FriendForm EXPECTS!!!
-  // 🔥 STEP 3A - MAKE SURE THE PARENT IS INJECTING ALL NECESSARY PROPS
+  // 🔥 MAKE SURE THE PARENT IS INJECTING ALL NECESSARY PROPS
   const {
     values,
     onInputChange,
-    onCheckboxChange,
     onSubmit,
+    onCheckboxChange,
     errors,
     disabled,
   } = props
 
   return (
-    // 🔥 STEP 3B - THIS FORM WANTS A SUBMIT HANDLER!
     <form className='form container' onSubmit={onSubmit}>
       <div className='form-group submit'>
         <h2>Add a Friend</h2>
+
+        {/* 🔥 DISABLE THE BUTTON */}
         <button disabled={disabled}>submit</button>
 
-        {/* 🔥 STEP 10 - SHOW A BUNCH OF ERRORS */}
         <div className='errors'>
+          {/* 🔥 RENDER THE VALIDATION ERRORS HERE */}
           <div>{errors.username}</div>
           <div>{errors.email}</div>
           <div>{errors.role}</div>
@@ -34,12 +34,8 @@ export default function FriendForm(props) {
         {/* ////////// TEXT INPUTS ////////// */}
         {/* ////////// TEXT INPUTS ////////// */}
         {/* ////////// TEXT INPUTS ////////// */}
-        <label>Username:&nbsp;
+        <label>Username&nbsp;
           <input
-            // 🔥 STEP 3C - THIS INPUT WANTS VALUE & CHANGE HANDLER!
-            // Inputs render what they're told
-            // Their current value ultimately comes from app state
-            // At each keystroke, a change handler should fire
             value={values.username}
             onChange={onInputChange}
             name='username'
@@ -47,7 +43,7 @@ export default function FriendForm(props) {
           />
         </label>
 
-        <label>Email:&nbsp;
+        <label>Email
           <input
             value={values.email}
             onChange={onInputChange}
@@ -61,7 +57,6 @@ export default function FriendForm(props) {
         {/* ////////// DROPDOWN ////////// */}
         <label>Role
           <select
-            // very similar to inputs of type text
             onChange={onInputChange}
             value={values.role}
             name='role'
