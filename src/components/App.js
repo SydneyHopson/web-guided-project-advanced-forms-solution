@@ -38,17 +38,19 @@ const initialDisabled = true
 
 
 export default function App() {
-  const [friends, setFriends] = useState(initialFriends)
-  const [formValues, setFormValues] = useState(initialFormValues)
-  // 🔥 STEP 5- SET UP STATE FOR `formErrors` AND `disabled`
-  const [formErrors, setFormErrors] = useState(initialFormErrors)
-  const [disabled, setDisabled] = useState(initialDisabled)
+  //////////////// STATES ////////////////
+  //////////////// STATES ////////////////
+  //////////////// STATES ////////////////
+  const [friends, setFriends] = useState(initialFriends)          // array
+  const [formValues, setFormValues] = useState(initialFormValues) // object
+  const [formErrors, setFormErrors] = useState(initialFormErrors) // object
+  const [disabled, setDisabled] = useState(initialDisabled)       // boolean
 
   //////////////// HELPERS ////////////////
   //////////////// HELPERS ////////////////
   //////////////// HELPERS ////////////////
   const getFriends = () =>
-    // 🔥 STEP 6- IMPLEMENT! ON SUCCESS PUT FRIENDS IN STATE
+    // 🔥 STEP 5- IMPLEMENT! ON SUCCESS PUT FRIENDS IN STATE
     //    helper to [GET] all friends from `http://localhost:4000/friends`
     axios.get('http://localhost:4000/friends')
       .then(res => {
@@ -59,7 +61,7 @@ export default function App() {
       })
 
   const postNewFriend = newFriend =>
-    // 🔥 STEP 7- IMPLEMENT! ON SUCCESS ADD NEWLY CREATED FRIEND TO STATE
+    // 🔥 STEP 6- IMPLEMENT! ON SUCCESS ADD NEWLY CREATED FRIEND TO STATE
     //    helper to [POST] `newFriend` to `http://localhost:4000/friends`
     //    and regardless of success or failure, the form should reset
     axios.post('http://localhost:4000/friends', newFriend)
@@ -81,7 +83,7 @@ export default function App() {
     const name = evt.target.name
     const value = evt.target.value
 
-    // 🔥 STEP 12- RUN VALIDATION WITH YUP
+    // 🔥 STEP 11- RUN VALIDATION WITH YUP
     yup.reach(formSchema, name)
       .validate(value)
       .then(valid => {
@@ -107,7 +109,7 @@ export default function App() {
   }
 
   const onCheckboxChange = evt => {
-    // 🔥 STEP 8- IMPLEMENT!
+    // 🔥 STEP 7- IMPLEMENT!
     // a) pull the `name` of the checkbox from the event
     const { name } = evt.target
     // b) pull whether `checked` true or false, from the event
@@ -130,11 +132,11 @@ export default function App() {
       email: formValues.email.trim(),
       role: formValues.role.trim(),
       civil: formValues.civil.trim(),
-      // 🔥 STEP 9- WHAT ABOUT HOBBIES?
+      // 🔥 STEP 8- WHAT ABOUT HOBBIES?
       hobbies: Object.keys(formValues.hobbies)
         .filter(hobby => formValues.hobbies[hobby] === true)
     }
-    // 🔥 STEP 10- POST NEW FRIEND USING HELPER
+    // 🔥 STEP 9- POST NEW FRIEND USING HELPER
     postNewFriend(newFriend)
   }
 
@@ -146,7 +148,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    // 🔥 STEP 11- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
+    // 🔥 STEP 10- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
     formSchema.isValid(formValues)
       .then(valid => {
         setDisabled(!valid)
@@ -161,7 +163,6 @@ export default function App() {
         values={formValues}
         onInputChange={onInputChange}
         onSubmit={onSubmit}
-        // 🔥🔥🔥 ADDITIONAL PROPS NEEDED 🔥🔥🔥
         onCheckboxChange={onCheckboxChange}
         errors={formErrors}
         disabled={disabled}
