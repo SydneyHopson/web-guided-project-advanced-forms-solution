@@ -3,12 +3,27 @@ import React from 'react'
 export default function FriendForm(props) {
   const {
     values,
-    onInputChange,
-    onSubmit,
-    onCheckboxChange,
-    errors,
+    submit,
+    inputChange,
+    checkboxChange,
     disabled,
+    errors,
   } = props
+
+  const onSubmit = evt => {
+    evt.preventDefault()
+    submit()
+  }
+
+  const onCheckboxChange = evt => {
+    const { name, checked } = evt.target
+    checkboxChange(name, checked)
+  }
+
+  const onInputChange = evt => {
+    const { name, value } = evt.target
+    inputChange(name, value)
+  }
 
   return (
     <form className='form container' onSubmit={onSubmit}>
@@ -61,10 +76,10 @@ export default function FriendForm(props) {
             name='role'
           >
             <option value=''>- Select an option -</option>
-            <option value='Student'>Student</option>
-            <option value='Alumni'>Alumni</option>
-            <option value='Instructor'>Instructor</option>
-            <option value='TL'>Team Lead</option>
+            <option value='student'>Student</option>
+            <option value='alumni'>Alumni</option>
+            <option value='instructor'>Instructor</option>
+            <option value='tl'>Team Lead</option>
           </select>
         </label>
 
@@ -72,23 +87,11 @@ export default function FriendForm(props) {
         {/* ////////// RADIO BUTTONS ////////// */}
         {/* ////////// RADIO BUTTONS ////////// */}
         <label>Single
-          <input
-            // Radio buttons are different!
-            // We do NOT set their 'value', it is hard-coded
-            onChange={onInputChange}
-            checked={values.civil === 'Single'}
-            value='Single'
-            name='civil'
-            type='radio' />
+          <input onChange={onInputChange} name='civil' value='single' checked={values.civil === 'single'} type="radio" />
         </label>
 
         <label>Married
-          <input
-            onChange={onInputChange}
-            checked={values.civil === 'Married'}
-            value='Married'
-            name='civil'
-            type='radio' />
+          <input onChange={onInputChange} name='civil' value='married' checked={values.civil === 'married'} type="radio" />
         </label>
       </div>
 
@@ -99,30 +102,15 @@ export default function FriendForm(props) {
         {/* ////////// CHECKBOXES ////////// */}
         {/* ////////// CHECKBOXES ////////// */}
         <label>Hiking
-          <input
-            // Checkboxes are different!
-            // We do NOT set their 'value'
-            // We use a 'checked' prop with a bool
-            checked={values.hobbies.hiking}
-            onChange={onCheckboxChange}
-            name='hiking'
-            type='checkbox' />
+          <input type="checkbox" checked={values.hobbies.hiking} name='hiking' onChange={onCheckboxChange} />
         </label>
 
         <label>Reading
-          <input
-            checked={values.hobbies.reading}
-            onChange={onCheckboxChange}
-            name='reading'
-            type='checkbox' />
+          <input type="checkbox" checked={values.hobbies.reading} name='reading' onChange={onCheckboxChange} />
         </label>
 
         <label>Coding
-          <input
-            checked={values.hobbies.coding}
-            onChange={onCheckboxChange}
-            name='coding'
-            type='checkbox' />
+          <input type="checkbox" checked={values.hobbies.coding} name='coding' onChange={onCheckboxChange} />
         </label>
       </div>
     </form>
