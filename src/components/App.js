@@ -79,7 +79,7 @@ export default function App() {
   //////////////// EVENT HANDLERS ////////////////
   //////////////// EVENT HANDLERS ////////////////
   const inputChange = (name, value) => {
-    // 🔥 STEP 11- RUN VALIDATION WITH YUP
+    // 🔥 STEP 10- RUN VALIDATION WITH YUP
     yup.reach(schema, name) // get to this part of the schema
       .validate(value)      // validate this value
       .then(() => {         // happy path
@@ -100,16 +100,16 @@ export default function App() {
     })
   }
 
-  const submit = () => {
+  const formSubmit = () => {
     const newFriend = {
       username: formValues.username.trim(),
       email: formValues.email.trim(),
       role: formValues.role.trim(),
       civil: formValues.civil.trim(),
-      // 🔥 STEP 8- WHAT ABOUT HOBBIES?
+      // 🔥 STEP 7- WHAT ABOUT HOBBIES?
       hobbies: ['hiking', 'reading', 'coding'].filter(hob => !!formValues[hob])
     }
-    // 🔥 STEP 9- POST NEW FRIEND USING HELPER
+    // 🔥 STEP 8- POST NEW FRIEND USING HELPER
     postNewFriend(newFriend)
   }
 
@@ -121,9 +121,9 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    // 🔥 STEP 10- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
+    // 🔥 STEP 9- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
     schema.isValid(formValues).then(valid => {
-      setDisabled(!valid);
+      setDisabled(!valid)
     })
   }, [formValues])
 
@@ -134,7 +134,7 @@ export default function App() {
       <FriendForm
         values={formValues}
         change={inputChange}
-        submit={submit}
+        submit={formSubmit}
         disabled={disabled}
         errors={formErrors}
       />
