@@ -16,7 +16,10 @@ const formSchema = yup.object().shape({
     .oneOf(['instructor', 'student', 'alumni', 'tl'], "Role is required"),
   civil: yup
     .string()
-    .oneOf(['married', 'single'], "Civil status is required")
+    .oneOf(['married', 'single'], "Civil status is required"),
+  coding: yup.boolean(),
+  reading: yup.boolean(),
+  hiking: yup.boolean(),
 })
 
 export default formSchema

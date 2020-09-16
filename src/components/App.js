@@ -21,11 +21,9 @@ const initialFormValues = {
   ///// RADIO BUTTONS /////
   civil: '',
   ///// CHECKBOXES /////
-  hobbies: {
-    hiking: false,
-    reading: false,
-    coding: false,
-  },
+  hiking: false,
+  reading: false,
+  coding: false,
 }
 const initialFormErrors = {
   username: '',
@@ -89,7 +87,7 @@ export default function App() {
           ...formErrors, [name]: '',
         })
       })
-      .catch(err => {       // sad path
+      .catch(err => {
         setFormErrors({
           ...formErrors,
           // validation error from schema
@@ -102,18 +100,6 @@ export default function App() {
     })
   }
 
-  const checkboxChange = (name, isChecked) => {
-    // 🔥 STEP 7- IMPLEMENT!
-    //  set a new state for the whole form
-    setFormValues({
-      ...formValues,
-      hobbies: {
-        ...formValues.hobbies,
-        [name]: isChecked,
-      },
-    })
-  }
-
   const submit = () => {
     const newFriend = {
       username: formValues.username.trim(),
@@ -121,7 +107,7 @@ export default function App() {
       role: formValues.role.trim(),
       civil: formValues.civil.trim(),
       // 🔥 STEP 8- WHAT ABOUT HOBBIES?
-      hobbies: Object.keys(formValues.hobbies).filter(h => formValues.hobbies[h] === true)
+      hobbies: ['hiking', 'reading', 'coding'].filter(hob => !!formValues[hob])
     }
     // 🔥 STEP 9- POST NEW FRIEND USING HELPER
     postNewFriend(newFriend)
@@ -147,8 +133,7 @@ export default function App() {
 
       <FriendForm
         values={formValues}
-        inputChange={inputChange}
-        checkboxChange={checkboxChange}
+        change={inputChange}
         submit={submit}
         disabled={disabled}
         errors={formErrors}
