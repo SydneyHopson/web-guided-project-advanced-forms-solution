@@ -12,9 +12,9 @@ The dev server for the API runs on port `4000` and this port needs to be free, o
 
 - Clone the repo.
 - Navigate into the project folder.
-- Run `npm i` to download the project's dependencies listed in the `package.json`.
-- Run `npm start` to compile the React project and spin up the app on `http://localhost:1234`.
-- Run `npm run server` to spin up a local API on `http://localhost:4000/friends`.
+- Run `npm i` to download the project's dependencies listed in the `package.json`
+- Run `npm run server` to spin up a local API on `http://localhost:4000/friends`
+- Run `npm start` to compile the React project and serve it on `http://localhost:1234`
 
 Today's endpoints are:
 
