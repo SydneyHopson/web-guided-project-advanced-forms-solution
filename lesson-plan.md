@@ -2,11 +2,10 @@
 
 ## Setup
 
-* This project is more complicated for students to spin up because it has a server piece and an extra script (see README)!
-* If their port 4000 is being used by something else, running `npm run server` will throw an "address in use" error.
-* Fkill CLI is a good tool for dealing with this:
-  * Install globally by `npm i -g fkill-cli`
-  * Kill process hogging port 4000 by running `fkill :4000`
+* This project is set up with Mock Service Worker to mock the API.
+* Mock Service Worker intercepts [GET] and [POST] requests to `http://buddies.com/api/friends`.
+* Students only need to `npm i` and `npm start` and the endpoints of the project should just work.
+* This frees us from having to put a server inside the project, or depend on an external service.
 
 ## Form Demo with Checkboxes and Validation
 
@@ -31,7 +30,7 @@
 7. Complete the payload for the [POST]
 8. Use the [POST] helper
 9. Update the submit button's state by verifying the whole form against the schema inside an effect hook
-10. Run validation of the individual value inside the change handler
+10. Implement validation on input change
 
 ## Following Along and Catching Up
 

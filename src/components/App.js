@@ -49,8 +49,8 @@ export default function App() {
   //////////////// HELPERS ////////////////
   const getFriends = () => {
     // 🔥 STEP 5- IMPLEMENT! ON SUCCESS PUT FRIENDS IN STATE
-    //    helper to [GET] all friends from `http://localhost:4000/friends`
-    axios.get('http://localhost:4000/friends')
+    //    helper to [GET] all friends from `http://buddies.com/api/friends`
+    axios.get('http://buddies.com/api/friends')
       .then(res => {
         setFriends(res.data)
       })
@@ -62,9 +62,9 @@ export default function App() {
 
   const postNewFriend = newFriend => {
     // 🔥 STEP 6- IMPLEMENT! ON SUCCESS ADD NEWLY CREATED FRIEND TO STATE
-    //    helper to [POST] `newFriend` to `http://localhost:4000/friends`
+    //    helper to [POST] `newFriend` to `http://buddies.com/api/friends`
     //    and regardless of success or failure, the form should reset
-    axios.post('http://localhost:4000/friends', newFriend)
+    axios.post('http://buddies.com/api/friends', newFriend)
       .then(res => {
         setFriends([res.data, ...friends])
         setFormValues(initialFormValues)
@@ -75,25 +75,19 @@ export default function App() {
       })
   }
 
+  const validate = (name, value) => {
+    // 🔥 STEP 10- RUN VALIDATION WITH YUP
+    yup.reach(schema, name)
+      .validate(value)
+      .then(() => setFormErrors({ ...formErrors, [name]: '' }))
+      .catch(err => setFormErrors({ ...formErrors, [name]: err.errors[0] }))
+  }
+
   //////////////// EVENT HANDLERS ////////////////
   //////////////// EVENT HANDLERS ////////////////
   //////////////// EVENT HANDLERS ////////////////
   const inputChange = (name, value) => {
-    // 🔥 STEP 10- RUN VALIDATION WITH YUP
-    yup.reach(schema, name) // get to this part of the schema
-      .validate(value)      // validate this value
-      .then(() => {         // happy path
-        setFormErrors({
-          ...formErrors, [name]: '',
-        })
-      })
-      .catch(err => {
-        setFormErrors({
-          ...formErrors,
-          // validation error from schema
-          [name]: err.errors[0],
-        })
-      })
+    validate(name, value)
     setFormValues({
       ...formValues,
       [name]: value // NOT AN ARRAY
@@ -122,9 +116,7 @@ export default function App() {
 
   useEffect(() => {
     // 🔥 STEP 9- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
-    schema.isValid(formValues).then(valid => {
-      setDisabled(!valid)
-    })
+    schema.isValid(formValues).then(valid => setDisabled(!valid))
   }, [formValues])
 
   return (
