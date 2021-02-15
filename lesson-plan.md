@@ -21,7 +21,7 @@
 
 ### Sumary of the 🔥 STEPs
 
-1. The very first step is testing out the endpoints shown in the `README.md` file using Postman, cURL or HTTPie
+1. The very first step is demonstrating the endpoints shown in the `README.md` file. Because we are using Mock Service Worker, we cannot demo with Httpie or curl. Instead we can just show them the data format. 
 2. Then we complete the `FriendForm.js` following the instructions in that file, demoing radio buttons and checkboxes
 3. Then we demo building a schema inside `formSchema.js` with Yup
 4. Write the imports inside `App.js`
