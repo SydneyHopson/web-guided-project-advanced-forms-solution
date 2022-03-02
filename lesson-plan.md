@@ -1,3 +1,4 @@
+# As with other MSW projects this will not work with Firefox and must be taught using Chrome.
 # Lesson Plan
 
 ## Setup
